@@ -315,9 +315,75 @@
         .zoom-image:hover {
             opacity: 0.9;
         }
+        a {
+        	text-decoration: none;
+        	color: inherit;
+        }
+        
+        ul {
+        	list-style: none;
+        }
+        
+        .header {
+            width: 100%;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background-color: white;
+        }
+        
+        .container {
+            box-sizing: border-box;
+        	max-width: 1240px;
+        	margin: 0 auto;
+        	padding-left: 20px;
+        	padding-right: 20px;
+        	text-align: center;
+        }
+        
+        .header--inner {
+        	display: flex;
+        	justify-content: space-between;
+        	align-items: center;
+        	height: 140px;
+        }
+        
+        .menu--list {
+        	display: flex;
+        	align-items: center;
+        	gap: 0 65px;
+        }
+        
+        .header--img {
+            height: 120px;
+            width: auto;
+        }        
     </style>
 </head>
 <body>
+        <header class="header">
+            <div class="container">
+                <div class="header--inner">
+                    <div class="header--icon">
+                        <img class="header--img" src="https://i.postimg.cc/RZhVHdG3/Screenshot-2025-07-06-182711.png">
+                    </div>
+                    <nav class="menu">
+                        <ul class="menu--list">
+                            <li>
+                                <a href="https://timurkoge.github.io/koge.github.io/Главная_страница.html">Главная</a>
+                            </li>
+                            <li>
+                                <a href="https://timurkoge.github.io/koge.github.io/Главная_страница.html#collections">Другие сборники</a>
+                            </li>
+                            <li>
+                                <a href="https://timurkoge.github.io/koge.github.io/Главная_страница.html#instruction">Инструкция</a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </header>
     <div class="head">
         <div id="icon">
             <img class="img" src="https://i.postimg.cc/RZhVHdG3/Screenshot-2025-07-06-182711.png" alt="КОГЭ">
