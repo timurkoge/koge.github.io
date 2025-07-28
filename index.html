@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="ru">
+    <head>
+        <meta charset="UTF-8">
+        <title>КОГЭ | Главная</title>
+        <link rel="shortcut icon" href="https://i.postimg.cc/6p62Lnrf/Screenshot-2025-07-06-182711.png" type="image/png">
+        <link rel="stylesheet" href="index.css">
+        <link rel="icon" href="https://i.postimg.cc/8P2X7kLG/Screenshot-2025-07-06-182711-2.png" type="image/x-icon">
+        <style>
+            .user-panel {
+                display: flex;
+                align-items: center;
+                gap: 10px;
+                margin-left: auto;
+            }
+            .user-avatar {
+                width: 40px;
+                height: 40px;
+                border-radius: 50%;
+                background-color: #00bfff;
+                color: white;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-weight: bold;
+            }
+            .logout-btn {
+                background: #ff4444;
+                color: white;
+                border: none;
+                padding: 8px 15px;
+                border-radius: 5px;
+                cursor: pointer;
+                transition: background 0.3s;
+            }
+            .logout-btn:hover {
+                background: #cc0000;
+            }
+            .auth-modal {
+                display: none;
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background-color: rgba(0,0,0,0.7);
+                z-index: 1002;
+                justify-content: center;
+                align-items: center;
+            }
+            .auth-container {
+                background: white;
+                padding: 30px;
+                border-radius: 10px;
+                width: 100%;
+                max-width: 400px;
+            }
+            .auth-tabs {
+                display: flex;
+                margin-bottom: 20px;
+            }
+            .tab-btn {
+                flex: 1;
+                padding: 10px;
+                background: none;
+                border: none;
+                cursor: pointer;
+            }
+            .tab-btn.active {
+                font-weight: bold;
+                border-bottom: 2px solid #00bfff;
+            }
+            .auth-input {
+                width: 100%;
+                padding: 10px;
+                margin-bottom: 15px;
+                border: 1px solid #ddd;
+                border-radius: 5px;
+            }
+            .auth-btn {
+                width: 100%;
+                padding: 10px;
+                background: #00bfff;
+                color: white;
+                border: none;
+                border-radius: 5px;
+                cursor: pointer;
+            }
+            .auth-error {
+                color: red;
+                text-align: center;
+                margin-top: 10px;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="authModal" class="auth-modal">
+            <div class="auth-container">
+                <h2>Вход в КОГЭ</h2>
+                
+                <div class="auth-tabs">
+                    <button class="tab-btn active" onclick="switchTab('login')">Вход</button>
+                    <button class="tab-btn" onclick="switchTab('register')">Регистрация</button>
+                </div>
+                
+                <!-- Форма входа -->
+                <div id="loginForm" class="auth-form">
+                    <input type="email" id="loginEmail" placeholder="Email" class="auth-input">
+                    <input type="password" id="loginPassword" placeholder="Пароль" class="auth-input">
+                    <div></div>
+                    <button onclick="login()" class="auth-btn">Войти</button>
+                </div>
+                
+                <!-- Форма регистрации -->
+                <div id="registerForm" class="auth-form" style="display:none">
+                    <input type="text" id="registerName" placeholder="Имя" class="auth-input">
+                    <input type="email" id="registerEmail" placeholder="Email" class="auth-input">
+                    <input type="password" id="registerPassword" placeholder="Пароль" class="auth-input">
+                    <button onclick="register()" class="auth-btn">Зарегистрироваться</button>
+                </div>
+                
+                <p id="authError" class="auth-error"></p>
+            </div>
+        </div>
+
+
+        <div class="loader-container" style="
+            background-color: #ffffff;
+            text-align: center;
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            z-index: 1001;
+            transition: opacity 0.5s ease;">
+            <div class="loader--image">
+                <img class="loader--img" src="https://i.postimg.cc/RZhVHdG3/Screenshot-2025-07-06-182711.png">
+            </div>
+            <div id="loader" style="
+                color: #00bfff; 
+                font-size: 200px; 
+                animation: spin 1s linear infinite;
+                display: inline-block;">&circlearrowright;</div>
+        </div>
+
+
+        <header class="header">
+            <div class="container">
+                <div class="header--inner">
+                    <div class="header--icon">
+                        <img class="header--img" src="https://i.postimg.cc/RZhVHdG3/Screenshot-2025-07-06-182711.png">
+                    </div>
+                    <nav class="menu">
+                        <ul class="menu--list">
+                            <li>
+                                <a href="#collections">Сборники</a>
+                            </li>
+                            <li>
+                                <a href="#instruction">Инструкция</a>
+                            </li>
+                            <li>
+                                <a href="#about">О КОГЭ</a>
+                            </li>
+                        </ul>
+                    </nav>
+                    <div id="userPanel" class="user-panel" style="display: none;">
+                        <div class="user-avatar" id="userAvatar"></div>
+                        <span id="userName"></span>
+                        <button onclick="logout()" class="logout-btn">Выйти</button>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+
+
+        <main>
+            <div class="up">
+                <div id="icon">
+                    <img class="img" src="https://i.postimg.cc/RZhVHdG3/Screenshot-2025-07-06-182711.png" alt="КОГЭ">
+                </div>
+                <h1 id="title">Главная КОГЭ</h1>
+                <h2 id="description">Это главная страница сайта КОГЭ здесь вы можете найти ссылки и другую полезную информацию.</h2>
+            </div>
+
+            <div class="border"></div>
+
+            <div class="block" id="collections">
+                <h2>Сборники</h2>
+                <p style="line-height: 2.5;">&nbsp;&nbsp;&nbsp;&nbsp;Здесь представлены наши сборники задач.<br>&nbsp;&nbsp;&nbsp;&nbsp;
+                    <a href="https://timurkoge.github.io/koge.github.io/collection1.html" style="text-decoration: none;"><span style="background-color: #00bfff; border-radius: 15px; padding: 7px; color: white;">Сборник №1</span> <span style="background-color: #00dc21; border-radius: 15px; padding: 7px; color: white;">Простой</span> <span style="background-color: #ff8400; border-radius: 15px; padding: 7px; color: white;">11 задач</span></a><!--<br>&nbsp;&nbsp;&nbsp;&nbsp;-->
+                </p>
+            </div>
+
+            <div class="block" id="instruction">
+                <h2>Как проходить тест?</h2>
+                <p>&nbsp;&nbsp;&nbsp;&nbsp;Тест проводится онлайн без ограничения по времени. Ответ на каждую задачу — числовое значение, может быть нецелым. Разделителем рекомендуется ставить точку.<br>&nbsp;&nbsp;&nbsp;&nbsp;После внесения ответов тест надо сдать. Это делается нажатием на кнопку "Отправить на проверку". После проверки появляется блок с результатами. Сначала идёт номер задачи, потом ваш ответ и правильный ответ, затем следует статус "✓ Верно" или "✗ Неверно". При желании можно сохранить свой результат. Тест можно пересдать.</p>
+            </div>
+            
+            <div class="block" id="about">
+                <h2>О КОГЭ</h2>
+                <p>&nbsp;&nbsp;&nbsp;&nbsp;КОГЭ &HorizontalLine; это сайт со сборниками задач ОГЭ по математике. Он был сделан в июне 2025г. и с тех пор сильно изменился и стал лучше, в ближашее время мы планируем запустить обратную связь.</p>
+            </div>
+        </main>
+
+        
+    </body>
+    <script>
+        function hideLoader() {
+            const loaderContainer = document.querySelector('.loader-container');
+            loaderContainer.style.opacity = '0';
+            setTimeout(() => {
+                loaderContainer.style.display = 'none';
+            }, 500);
+        }
+
+        function checkLoadState() {
+            if (document.readyState === 'complete') {
+                setTimeout(hideLoader, 2000);
+            } else {
+                window.addEventListener('load', () => setTimeout(hideLoader, 2000));
+                setTimeout(hideLoader, 7000);
+            }
+        }
+        checkLoadState();
+    </script>
+
+    <script src="firebase-config.js"></script>
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+        import { getAuth } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+          
+        const app = initializeApp(firebaseConfig); // Используем конфиг из отдельного файла
+        const auth = getAuth(app);
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+
+        window.switchTab = function(tab) {
+            if (tab === 'login') {
+                document.getElementById('loginForm').style.display = 'block';
+                document.getElementById('registerForm').style.display = 'none';
+                document.querySelectorAll('.tab-btn').forEach(btn => {
+                    btn.classList.toggle('active', btn.textContent === 'Вход');
+                });
+            } else {
+                document.getElementById('loginForm').style.display = 'none';
+                document.getElementById('registerForm').style.display = 'block';
+                document.querySelectorAll('.tab-btn').forEach(btn => {
+                    btn.classList.toggle('active', btn.textContent === 'Регистрация');
+                });
+            }
+        };
+
+        window.login = async function() {
+            const email = document.getElementById('loginEmail').value;
+            const password = document.getElementById('loginPassword').value;
+            const errorElement = document.getElementById('authError');
+            
+            try {
+                await signInWithEmailAndPassword(auth, email, password);
+            } catch (error) {
+                errorElement.textContent = getAuthErrorMessage(error.code);
+            }
+        };
+
+        window.register = async function() {
+            const name = document.getElementById('registerName').value;
+            const email = document.getElementById('registerEmail').value;
+            const password = document.getElementById('registerPassword').value;
+            const errorElement = document.getElementById('authError');
+            
+            try {
+                const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+                await updateProfile(userCredential.user, { displayName: name });
+                updateUserUI(userCredential.user);
+            } catch (error) {
+                errorElement.textContent = getAuthErrorMessage(error.code);
+            }
+        };
+
+        window.logout = async function() {
+            try {
+                await signOut(auth);
+            } catch (error) {
+                console.error("Ошибка при выходе:", error);
+            }
+        };
+
+        function getAuthErrorMessage(code) {
+            const messages = {
+                'auth/invalid-email': 'Неверный формат email',
+                'auth/user-disabled': 'Аккаунт отключен',
+                'auth/user-not-found': 'Пользователь не найден',
+                'auth/wrong-password': 'Неверный пароль',
+                'auth/email-already-in-use': 'Email уже используется',
+                'auth/weak-password': 'Пароль слишком простой (мин. 6 символов)',
+                'auth/operation-not-allowed': 'Операция не разрешена'
+            };
+            return messages[code] || 'Ошибка авторизации';
+        }
+
+        function updateUserUI(user) {
+            const userPanel = document.getElementById('userPanel');
+            const userName = document.getElementById('userName');
+            const userAvatar = document.getElementById('userAvatar');
+            const collectionLink = document.getElementById('collectionLink');
+            
+            if (user) {
+                userPanel.style.display = 'flex';
+                userName.textContent = user.displayName || user.email;
+                userAvatar.textContent = user.displayName ? user.displayName.charAt(0).toUpperCase() : user.email.charAt(0).toUpperCase();
+                document.getElementById('authModal').style.display = 'none';
+                
+                // Сохраняем данные пользователя
+                sessionStorage.setItem('currentUser', JSON.stringify({
+                    uid: user.uid,
+                    email: user.email,
+                    displayName: user.displayName
+                }));
+                
+                // Добавляем параметр к ссылке
+                collectionLink.href = `collection1.html?uid=${user.uid}`;
+            } else {
+                userPanel.style.display = 'none';
+                document.getElementById('authModal').style.display = 'flex';
+                sessionStorage.removeItem('currentUser');
+                collectionLink.href = "collection1.html";
+            }
+        }
+
+        // Проверяем авторизацию при загрузке
+        document.addEventListener('DOMContentLoaded', () => {
+            const userData = sessionStorage.getItem('currentUser');
+            if (userData) {
+                updateUserUI(JSON.parse(userData));
+            }
+        });
+
+        // Отслеживаем состояние аутентификации
+        onAuthStateChanged(auth, (user) => {
+            updateUserUI(user);
+        });
+    </script>
+</html>
