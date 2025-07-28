@@ -38,24 +38,28 @@
     </style>
 </head>
 <body>
-    <div class="loader-container" style="
-        background-color: #00bfff; 
-        display: flex;
-        align-items: center;
-        justify-content: center; 
-        position: fixed;
-        top: 0;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        z-index: 1001;
-        transition: opacity 0.5s ease;">
-        <span id="loader" style="
-            color: white; 
-            font-size: 200px; 
-            animation: spin 1s linear infinite;
-            display: inline-block;">&circlearrowright;</span>
-    </div>
+
+
+        <div class="loader-container" style="
+            background-color: #ffffff;
+            text-align: center;
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            z-index: 1001;
+            transition: opacity 0.5s ease;">
+            <div class="loader--image">
+                <img class="loader--img" src="https://i.postimg.cc/RZhVHdG3/Screenshot-2025-07-06-182711.png">
+            </div>
+            <div id="loader" style="
+                color: #00bfff; 
+                font-size: 200px; 
+                animation: spin 1s linear infinite;
+                display: inline-block;">&circlearrowright;</div>
+        </div>
+
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
