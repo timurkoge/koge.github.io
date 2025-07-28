@@ -234,9 +234,6 @@
         const app = initializeApp(firebaseConfig); // Используем конфиг из отдельного файла
         const auth = getAuth(app);
 
-        const app = initializeApp(firebaseConfig);
-        const auth = getAuth(app);
-
         window.switchTab = function(tab) {
             if (tab === 'login') {
                 document.getElementById('loginForm').style.display = 'block';
