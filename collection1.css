@@ -383,8 +383,8 @@ ul {
     margin-left: auto;
 }
 .user-avatar {
-    width: 40px;
-    height: 40px;
+    min-width: 40px;
+    min-height: 40px;
     border-radius: 50%;
     background-color: #00bfff;
     color: white;
@@ -392,6 +392,7 @@ ul {
     align-items: center;
     justify-content: center;
     font-weight: bold;
+    font-size: 17px
 }
 .logout-btn {
     background: #ff4444;
