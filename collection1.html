@@ -7,35 +7,93 @@
     <link rel="shortcut icon" href="https://i.postimg.cc/6p62Lnrf/Screenshot-2025-07-06-182711.png" type="image/png">
     <link rel="stylesheet" href="collection1.css">
     <link rel="icon" href="https://i.postimg.cc/8P2X7kLG/Screenshot-2025-07-06-182711-2.png" type="image/x-icon">
-    <style>
-        .auth-modal {
-            display: flex;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0,0,0,0.7);
-            z-index: 1002;
-            justify-content: center;
-            align-items: center;
-        }
-        .auth-container {
-            background: white;
-            padding: 30px;
-            border-radius: 10px;
-            text-align: center;
-        }
-        .auth-btn {
-            background: #00bfff;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 5px;
-            cursor: pointer;
-            margin-top: 15px;
-        }
-    </style>
+    
+        <style>
+            .user-panel {
+                display: flex;
+                align-items: center;
+                gap: 10px;
+                margin-left: auto;
+            }
+            .user-avatar {
+                width: 40px;
+                height: 40px;
+                border-radius: 50%;
+                background-color: #00bfff;
+                color: white;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-weight: bold;
+            }
+            .logout-btn {
+                background: #ff4444;
+                color: white;
+                border: none;
+                padding: 8px 15px;
+                border-radius: 5px;
+                cursor: pointer;
+                transition: background 0.3s;
+            }
+            .logout-btn:hover {
+                background: #cc0000;
+            }
+            .auth-modal {
+                display: none;
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background-color: rgba(0,0,0,0.7);
+                z-index: 1002;
+                justify-content: center;
+                align-items: center;
+            }
+            .auth-container {
+                background: white;
+                padding: 30px;
+                border-radius: 10px;
+                width: 100%;
+                max-width: 400px;
+            }
+            .auth-tabs {
+                display: flex;
+                margin-bottom: 20px;
+            }
+            .tab-btn {
+                flex: 1;
+                padding: 10px;
+                background: none;
+                border: none;
+                cursor: pointer;
+            }
+            .tab-btn.active {
+                font-weight: bold;
+                border-bottom: 2px solid #00bfff;
+            }
+            .auth-input {
+                width: 100%;
+                padding: 10px;
+                margin-bottom: 15px;
+                border: 1px solid #ddd;
+                border-radius: 5px;
+            }
+            .auth-btn {
+                width: 100%;
+                padding: 10px;
+                background: #00bfff;
+                color: white;
+                border: none;
+                border-radius: 5px;
+                cursor: pointer;
+            }
+            .auth-error {
+                color: red;
+                text-align: center;
+                margin-top: 10px;
+            }
+        </style>
 </head>
 <body>
 
